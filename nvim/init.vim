@@ -48,7 +48,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', lsp_opts)
 end
 
-local lsp_servers = { 'ocamllsp' }
+local lsp_servers = { 'ocamllsp', 'pyright' }
 for _, lsp_server in pairs(lsp_servers) do
   require('lspconfig')[lsp_server].setup {
     on_attach = on_attach,
