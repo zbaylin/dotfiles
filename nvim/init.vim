@@ -12,15 +12,25 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-omni'
 Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+Plug 'lervag/vimtex'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+Plug 'dylon/vim-antlr'
 call plug#end()
 
 set completeopt=menu,menuone,noselect
 
 lua <<EOF
-local lspconfig = require 'lspconfig'
-local cmp = require 'cmp'
+-- Local lua files
+local utils = require('utils')
+
+local lspconfig = require('lspconfig')
+local cmp = require('cmp')
+local cmp_ultisnips_mappings = require('cmp_nvim_ultisnips.mappings')
 
 local lsp_opts = { noremap=true, silent=true }
 vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', lsp_opts)
@@ -29,7 +39,7 @@ vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', ls
 vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', lsp_opts)
 vim.api.nvim_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', lsp_opts)
 
-local on_attach = function(client, bufnr)
+local on_attach_generic = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -48,29 +58,76 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', lsp_opts)
 end
 
-local lsp_servers = { 'ocamllsp', 'pyright' }
-for _, lsp_server in pairs(lsp_servers) do
-  require('lspconfig')[lsp_server].setup {
-    on_attach = on_attach,
-    flags = {
-      -- This will be the default in neovim 0.7+
-      debounce_text_changes = 150,
-    }
-  }
+local on_attach_ts = function(client, bufnr)
+  client.resolved_capabilities.document_formatting = false
+  client.resolved_capabilities.document_range_formatting = false
+
+  local ts_utils = require("nvim-lsp-ts-utils")
+  ts_utils.setup({})
+  ts_utils.setup_client(client)
+
+  on_attach_generic(client, bufnr)
 end
+
+local default_flags = { debounce_text_changes = 150 }
+
+require('lspconfig')['ocamllsp'].setup ({
+  on_attach = on_attach_generic,
+  flags = default_flags
+})
+
+require('lspconfig')['pyright'].setup({
+  on_attach = on_attach_generic,
+  flags = default_flags
+})
+
+require('lspconfig')['tsserver'].setup({
+  on_attach = on_attach_ts,
+  flags = default_flags
+})
+
+require("cmp_nvim_ultisnips").setup({ })
 
 cmp.setup({
   snippet = {
     expand = function(args)
       vim.fn["UltiSnips#Anon"](args.body)
-    end,
+    end
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-  }, {
-    { name = 'buffer' }
-  })
+    { name = 'omni', filetypes = 'tex' },
+    { name = "ultisnips" },
+    { name = 'buffer' },
+  }),
+  mapping = {
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<Down>'] = cmp.mapping.select_next_item(),
+    ['<Up>'] = cmp.mapping.select_prev_item(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<Tab>'] = cmp.mapping(
+      function(fallback)
+        cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+      end,
+      { 'i', 's' }
+    ),
+    ['<S-Tab>'] = cmp.mapping(
+      function(fallback)
+        cmp_ultisnips_mappings.jump_backwards(fallback)
+      end,
+      { 'i', 's' }
+    ),
+    ['<C-e>'] = cmp.mapping.close(),
+  }
 })
+
+utils.save_and_build()
+
+vim.keymap.set('n', 'wb', utils.save_and_build, {})
 EOF
 
 nnoremap <C-p> :Files<Cr>
