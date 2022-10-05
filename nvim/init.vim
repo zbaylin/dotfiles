@@ -1,8 +1,11 @@
 set number
 syntax on
 
+let mapleader = " "
+
 call plug#begin()
 Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-jdaddy'
 Plug 'preservim/nerdtree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -20,13 +23,34 @@ Plug 'lervag/vimtex'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'dylon/vim-antlr'
+Plug 'cocopon/iceberg.vim'
+Plug 'jremmen/vim-ripgrep'
+Plug 'APZelos/blamer.nvim'
+Plug 'ruanyl/vim-gh-line'
+Plug 'simrat39/symbols-outline.nvim'
+Plug 'jacoborus/tender.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'}
 call plug#end()
 
 set completeopt=menu,menuone,noselect
 
+nnoremap <C-p> :Files<Cr>
+
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+colorscheme tender
+let g:airline_theme = 'tender'
+
+hi NonText guifg=bg
+
 lua <<EOF
 -- Local lua files
 local utils = require('utils')
+local symbols = require('symbols')
+local nerdtree = require('nerdtree')
 
 local lspconfig = require('lspconfig')
 local cmp = require('cmp')
@@ -125,9 +149,6 @@ cmp.setup({
   }
 })
 
-utils.save_and_build()
-
-vim.keymap.set('n', 'wb', utils.save_and_build, {})
+vim.api.nvim_set_keymap('n', '<leader>qq', '<cmd>q<CR>', lsp_opts)
 EOF
 
-nnoremap <C-p> :Files<Cr>
