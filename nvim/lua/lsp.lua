@@ -1,30 +1,47 @@
-local lspconfig = require('lspconfig')
+local lspconfig = require("lspconfig")
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
+local utils = require("utils")
+local nnoremap = utils.nnoremap
 
-local lsp_opts = { noremap=true, silent=true }
+nnoremap("]d", vim.diagnostic.goto_next)
+nnoremap("[d", vim.diagnostic.goto_prev)
+nnoremap("<leader>f", function() vim.lsp.buf.format({ async = true }) end)
 
-vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', lsp_opts)
+local handlers = {
+  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+}
 
 local on_attach_generic = function(client, bufnr)
+  local lsp_opts = {
+    noremap = true, 
+    silent = true,
+    buffer = bufnr
+  }
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', lsp_opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', lsp_opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', lsp_opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', lsp_opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', lsp_opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', lsp_opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', lsp_opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', lsp_opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', lsp_opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', lsp_opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', lsp_opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gF', '<cmd>lua vim.lsp.buf.references()<CR>', lsp_opts)
+  nnoremap('gD', vim.lsp.buf.declaration, lsp_opts)
+  nnoremap('gd', vim.lsp.buf.definition, lsp_opts)
+  nnoremap('K', vim.lsp.buf.hover, lsp_opts)
+  nnoremap('<leader>k', vim.lsp.buf.signature_help, lsp_opts)
+  nnoremap('gi', vim.lsp.buf.implementation, lsp_opts)
+  nnoremap('<leader>D', vim.lsp.buf.type_definition, lsp_opts)
+  nnoremap('<leader>rn', vim.lsp.buf.rename, lsp_opts)
+  nnoremap('<leader>ca', vim.lsp.buf.code_action, lsp_opts)
+  nnoremap('gF', vim.lsp.buf.references, lsp_opts)
+
+  if client.server_capabilities.codeLensProvider then
+    local codelens = vim.api.nvim_create_augroup(
+      "LSPCodeLens",
+      { clear = true }
+    )
+    vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave", "CursorHold" }, {
+      group = codelens,
+      callback = vim.lsp.codelens.refresh,
+      buffer = bufnr
+    })
+  end
 end
 
 local on_attach_ts = function(client, bufnr)
@@ -42,17 +59,18 @@ local default_flags = { debounce_text_changes = 150 }
 
 lspconfig['ocamllsp'].setup ({
   on_attach = on_attach_generic,
-  flags = default_flags
+  flags = default_flags,
+  handlers = handlers
 })
 
 lspconfig['pyright'].setup({
   on_attach = on_attach_generic,
-  flags = default_flags
+  flags = default_flags,
+  handlers = handlers
 })
 
 lspconfig['tsserver'].setup({
   on_attach = on_attach_ts,
-  flags = default_flags
+  flags = default_flags,
+  handlers = handlers
 })
-
-require("cmp_nvim_ultisnips").setup({ })

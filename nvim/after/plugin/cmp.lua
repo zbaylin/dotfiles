@@ -1,39 +1,35 @@
-local cmp = require('cmp')
-local cmp_ultisnips_mappings = require('cmp_nvim_ultisnips.mappings')
+local cmp = require("cmp")
+local luasnip = require("luasnip")
+local luasnip_loaders_from_vscode = require("luasnip.loaders.from_vscode")
+
+luasnip_loaders_from_vscode.lazy_load()
 
 cmp.setup({
   snippet = {
     expand = function(args)
-      vim.fn["UltiSnips#Anon"](args.body)
+      luasnip.lsp_expand(args.body)
     end
   },
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'omni', filetypes = 'tex' },
-    { name = "ultisnips" },
-    { name = 'buffer' },
+  mapping = cmp.mapping.preset.insert({
+    [ "<C-k>" ] = cmp.mapping.select_prev_item(),
+    [ "<C-j>" ] = cmp.mapping.select_next_item(),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
   }),
-  mapping = {
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<Down>'] = cmp.mapping.select_next_item(),
-    ['<Up>'] = cmp.mapping.select_prev_item(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ['<Tab>'] = cmp.mapping(
-      function(fallback)
-        cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
-      end,
-      { 'i', 's' }
-    ),
-    ['<S-Tab>'] = cmp.mapping(
-      function(fallback)
-        cmp_ultisnips_mappings.jump_backwards(fallback)
-      end,
-      { 'i', 's' }
-    ),
-    ['<C-e>'] = cmp.mapping.close(),
-  }
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered()
+  },
+  sources = cmp.config.sources({
+    { name = "nvim_lsp" },
+    { name = "luasnip", max_item_count = 3 },
+    { name = "buffer", max_item_count = 3 }
+  })
 })
