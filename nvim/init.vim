@@ -10,6 +10,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'nvim-treesitter/playground'
 Plug 'neovim/nvim-lspconfig'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'hrsh7th/nvim-cmp'
@@ -32,6 +34,9 @@ Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'nvim-lualine/lualine.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+Plug 'rcarriga/nvim-notify'
+Plug 'lukas-reineke/indent-blankline.nvim'
 call plug#end()
 
 set completeopt=menu,menuone,noselect

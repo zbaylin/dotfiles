@@ -1,6 +1,8 @@
-require'nvim-treesitter.configs'.setup {
+local treesitter_configs = require("nvim-treesitter.configs")
+
+treesitter_configs.setup {
   -- A list of parser names, or "all" (the four listed parsers should always be installed)
-  ensure_installed = { "c", "lua", "vim", "help", "ocaml" },
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "ocaml" },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -18,4 +20,28 @@ require'nvim-treesitter.configs'.setup {
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
+  playground = {
+    enable = true
+  },
+  indent = {
+    enable = true
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        [ "am" ] = "@module.outer",
+        [ "im" ] = "@module.inner",
+
+        [ "la" ] = "@assignment.lhs",
+        [ "ra" ] = "@assignment.rhs",
+
+        [ "ai" ] = "@conditional.outer",
+        [ "ii" ] = "@conditional.inner",
+
+        [ "ac" ] = "@comment.outer",
+        [ "ic" ] = "@comment.inner"
+      }
+    }
+  }
 }
