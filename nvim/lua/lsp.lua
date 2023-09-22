@@ -6,6 +6,7 @@ local nnoremap = utils.nnoremap
 nnoremap("]d", vim.diagnostic.goto_next)
 nnoremap("[d", vim.diagnostic.goto_prev)
 nnoremap("<leader>f", function() vim.lsp.buf.format({ async = true }) end)
+nnoremap("<leader>e", function() vim.diagnostic.open_float({ scope = "line" }) end)
 
 local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
@@ -64,6 +65,12 @@ lspconfig['ocamllsp'].setup ({
 })
 
 lspconfig['pyright'].setup({
+  on_attach = on_attach_generic,
+  flags = default_flags,
+  handlers = handlers
+})
+
+lspconfig['solidity'].setup({
   on_attach = on_attach_generic,
   flags = default_flags,
   handlers = handlers
