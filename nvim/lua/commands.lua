@@ -1,6 +1,6 @@
 vim.api.nvim_create_user_command(
   "Root",
-  function(opts)
+  function()
     local handle = io.popen("git root")
     local root = handle:read("*l")
     vim.cmd({

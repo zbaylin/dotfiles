@@ -15,6 +15,10 @@ lualine.setup({
     },
     lualine_x = {
       "filetype"
-    }
+    },
+    lualine_y = { {
+      "aerial",
+      sep = " > "
+    } }
   }
 })

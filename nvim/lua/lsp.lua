@@ -1,5 +1,5 @@
+local neodev = require("neodev")
 local lspconfig = require("lspconfig")
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local utils = require("utils")
 local nnoremap = utils.nnoremap
 
@@ -14,7 +14,7 @@ local handlers = {
 
 local on_attach_generic = function(client, bufnr)
   local lsp_opts = {
-    noremap = true, 
+    noremap = true,
     silent = true,
     buffer = bufnr
   }
@@ -58,7 +58,7 @@ end
 
 local default_flags = { debounce_text_changes = 150 }
 
-lspconfig['ocamllsp'].setup ({
+lspconfig['ocamllsp'].setup({
   on_attach = on_attach_generic,
   flags = default_flags,
   handlers = handlers
@@ -80,4 +80,17 @@ lspconfig['tsserver'].setup({
   on_attach = on_attach_ts,
   flags = default_flags,
   handlers = handlers
+})
+
+neodev.setup({ })
+
+lspconfig['lua_ls'].setup({
+  on_attach = on_attach_generic,
+  flags = default_flags,
+  handlers = handlers,
+  settings = {
+    Lua = {
+      runtime = { version = "LuaJIT" },
+    }
+  }
 })

@@ -10,4 +10,4 @@ vim.opt.incsearch = true
 
 -- Colors
 vim.opt.termguicolors = true
-vim.cmd("colorscheme catppuccin-latte")
+vim.cmd("colorscheme github_light")

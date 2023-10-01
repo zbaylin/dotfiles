@@ -9,6 +9,19 @@ local function bind(op, outer_opts)
   end
 end
 
+local function dbg(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dbg(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
 Export.map = bind("")
 Export.nmap = bind("n", { noremap = false })
 Export.nnoremap = bind("n")
@@ -16,5 +29,6 @@ Export.vnoremap = bind("v")
 Export.xnoremap = bind("x")
 Export.inoremap = bind("i")
 Export.tnoremap = bind("t")
+Export.dbg = dbg
 
 return Export
