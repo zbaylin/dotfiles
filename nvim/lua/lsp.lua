@@ -1,5 +1,6 @@
 local neodev = require("neodev")
 local lspconfig = require("lspconfig")
+local lspconfig_configs = require("lspconfig.configs")
 local utils = require("utils")
 local nnoremap = utils.nnoremap
 
@@ -82,15 +83,30 @@ lspconfig['tsserver'].setup({
   handlers = handlers
 })
 
-neodev.setup({ })
+neodev.setup({})
 
-lspconfig['lua_ls'].setup({
+lspconfig['yamlls'].setup({
   on_attach = on_attach_generic,
   flags = default_flags,
-  handlers = handlers,
-  settings = {
-    Lua = {
-      runtime = { version = "LuaJIT" },
-    }
+  handlers = handlers
+})
+
+lspconfig_configs['pb'] = {
+  default_config = {
+    cmd = { 'pb', 'lsp' },
+    root_dir = lspconfig.util.root_pattern('.git'),
+    filetypes = { 'proto' }
   }
+}
+
+lspconfig['pb'].setup({
+  on_attach = on_attach_generic,
+  flags = default_flags,
+  handlers = handlers
+})
+
+lspconfig["terraformls"].setup({
+  on_attach = on_attach_generic,
+  flags = default_flags,
+  handlers = handlers
 })

@@ -10,4 +10,5 @@ vim.opt.incsearch = true
 
 -- Colors
 vim.opt.termguicolors = true
-vim.cmd("colorscheme github_light")
+vim.cmd("colorscheme edge")
+vim.opt.background = "light"
