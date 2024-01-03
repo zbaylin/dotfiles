@@ -1,14 +1,15 @@
 local builtin = require("telescope.builtin")
 local actions = require("telescope.actions")
 local telescope = require("telescope")
+local nnoremap = require("utils").nnoremap
 
-vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
-vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-vim.keymap.set("n", "<leader>fd", builtin.diagnostics, {})
-vim.keymap.set("n", "<leader>fr", builtin.registers, {})
-vim.keymap.set("n", "<leader>?", builtin.oldfiles, {})
+nnoremap("<leader>ff", builtin.find_files, {})
+nnoremap("<leader>fg", builtin.live_grep, {})
+nnoremap("<leader>fb", builtin.buffers, {})
+nnoremap("<leader>fh", builtin.help_tags, {})
+nnoremap("<leader>fd", builtin.diagnostics, {})
+nnoremap("<leader>fr", builtin.registers, {})
+nnoremap("<leader>?", builtin.oldfiles, {})
 
 telescope.setup({
   defaults = {

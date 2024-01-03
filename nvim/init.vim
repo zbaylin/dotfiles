@@ -41,6 +41,7 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'stevearc/aerial.nvim'
 Plug 'stevearc/oil.nvim'
 Plug 'windwp/nvim-autopairs'
+Plug 'lervag/vimtex'
 call plug#end()
 
 set completeopt=menu,menuone,noselect
