@@ -7,7 +7,7 @@ call plug#begin()
 Plug 'APZelos/blamer.nvim'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'RRethy/vim-illuminate'
-Plug 'cocopon/iceberg.vim'
+Plug 'sainnhe/edge'
 Plug 'dylon/vim-antlr'
 Plug 'folke/neodev.nvim'
 Plug 'hrsh7th/cmp-buffer'
@@ -49,9 +49,10 @@ hi NonText guifg=bg
 
 lua <<EOF
 -- Local lua files
-local utils = require('utils')
-local set = require('set')
-local remap = require('remap')
-local lsp = require('lsp')
-local commands = require('commands')
+local utils = require("utils")
+local set = require("set")
+local remap = require("remap")
+local lsp = require("lsp")
+local commands = require("commands")
+local autocmds = require("autocmds")
 EOF
