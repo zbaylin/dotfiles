@@ -42,6 +42,7 @@ Plug 'stevearc/aerial.nvim'
 Plug 'stevearc/oil.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
+Plug 'lervag/vimtex'
 call plug#end()
 
 set completeopt=menu,menuone,noselect
