@@ -1,6 +1,7 @@
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 local luasnip_loaders_from_vscode = require("luasnip.loaders.from_vscode")
+local utils = require("utils")
 
 luasnip_loaders_from_vscode.lazy_load()
 
@@ -22,6 +23,7 @@ cmp.setup({
         fallback()
       end
     end, { "i", "s" }),
+    ["<CR>"] = cmp.mapping.confirm({ select = false }),
   }),
   window = {
     completion = cmp.config.window.bordered(),

@@ -1,7 +1,9 @@
 local neodev = require("neodev")
 local lspconfig = require("lspconfig")
 local lspconfig_configs = require("lspconfig.configs")
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local utils = require("utils")
+
 local nnoremap = utils.nnoremap
 
 nnoremap("]d", vim.diagnostic.goto_next)
@@ -17,9 +19,7 @@ local on_attach_generic = function(client, bufnr)
   local lsp_opts = {
     noremap = true,
     silent = true,
-    buffer = bufnr
-  }
-  -- Enable completion triggered by <c-x><c-o>
+    buffer = bufnr } -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
@@ -59,28 +59,34 @@ end
 
 local default_flags = { debounce_text_changes = 150 }
 
+local default_capabilities = cmp_nvim_lsp.default_capabilities()
+
 lspconfig['ocamllsp'].setup({
   on_attach = on_attach_generic,
   flags = default_flags,
-  handlers = handlers
+  handlers = handlers,
+  capabilities = default_capabilities,
 })
 
 lspconfig['pyright'].setup({
   on_attach = on_attach_generic,
   flags = default_flags,
-  handlers = handlers
+  handlers = handlers,
+  capabilities = default_capabilities,
 })
 
 lspconfig['solidity'].setup({
   on_attach = on_attach_generic,
   flags = default_flags,
-  handlers = handlers
+  handlers = handlers,
+  capabilities = default_capabilities,
 })
 
 lspconfig['tsserver'].setup({
   on_attach = on_attach_ts,
   flags = default_flags,
-  handlers = handlers
+  handlers = handlers,
+  capabilities = default_capabilities,
 })
 
 neodev.setup({})
@@ -88,7 +94,8 @@ neodev.setup({})
 lspconfig['yamlls'].setup({
   on_attach = on_attach_generic,
   flags = default_flags,
-  handlers = handlers
+  handlers = handlers,
+  capabilities = default_capabilities,
 })
 
 lspconfig_configs['pb'] = {
@@ -102,11 +109,34 @@ lspconfig_configs['pb'] = {
 lspconfig['pb'].setup({
   on_attach = on_attach_generic,
   flags = default_flags,
-  handlers = handlers
+  handlers = handlers,
+  capabilities = default_capabilities,
 })
 
 lspconfig["terraformls"].setup({
   on_attach = on_attach_generic,
   flags = default_flags,
-  handlers = handlers
+  handlers = handlers,
+  capabilities = default_capabilities,
+})
+
+lspconfig["clangd"].setup({
+  on_attach = on_attach_generic,
+  flags = default_flags,
+  handlers = handlers,
+  capabilities = default_capabilities,
+})
+
+lspconfig["html"].setup({
+  on_attach = on_attach_generic,
+  flags = default_flags,
+  handlers = handlers,
+  capabilities = default_capabilities,
+})
+
+lspconfig["cssls"].setup({
+  on_attach = on_attach_generic,
+  flags = default_flags,
+  handlers = handlers,
+  capabilities = default_capabilities,
 })

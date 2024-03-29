@@ -30,8 +30,8 @@ Plug 'nmac427/guess-indent.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/playground'
 Plug 'projekt0n/github-nvim-theme'
@@ -41,6 +41,7 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'stevearc/aerial.nvim'
 Plug 'stevearc/oil.nvim'
 Plug 'windwp/nvim-autopairs'
+Plug 'nvim-telescope/telescope-ui-select.nvim'
 call plug#end()
 
 set completeopt=menu,menuone,noselect
@@ -52,7 +53,6 @@ lua <<EOF
 local utils = require("utils")
 local set = require("set")
 local remap = require("remap")
-local lsp = require("lsp")
 local commands = require("commands")
 local autocmds = require("autocmds")
 EOF
