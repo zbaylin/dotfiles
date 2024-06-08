@@ -1,55 +1,24 @@
-local neodev = require("neodev")
 local lspconfig = require("lspconfig")
 local lspconfig_configs = require("lspconfig.configs")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local utils = require("utils")
+local lsp_helpers = require("lsp_helpers")
 
 local nnoremap = utils.nnoremap
+local vmap = utils.vmap
+local on_attach_generic = lsp_helpers.on_attach_generic
 
 nnoremap("]d", vim.diagnostic.goto_next)
 nnoremap("[d", vim.diagnostic.goto_prev)
 nnoremap("<leader>f", function() vim.lsp.buf.format({ async = true }) end)
+vmap("<leader>f", function() vim.lsp.buf.format({ async = true }) end)
 nnoremap("<leader>e", function() vim.diagnostic.open_float({ scope = "line" }) end)
 
 local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
 }
 
-local on_attach_generic = function(client, bufnr)
-  local lsp_opts = {
-    noremap = true,
-    silent = true,
-    buffer = bufnr } -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  nnoremap('gD', vim.lsp.buf.declaration, lsp_opts)
-  nnoremap('gd', vim.lsp.buf.definition, lsp_opts)
-  nnoremap('K', vim.lsp.buf.hover, lsp_opts)
-  nnoremap('<leader>k', vim.lsp.buf.signature_help, lsp_opts)
-  nnoremap('gi', vim.lsp.buf.implementation, lsp_opts)
-  nnoremap('<leader>D', vim.lsp.buf.type_definition, lsp_opts)
-  nnoremap('<leader>rn', vim.lsp.buf.rename, lsp_opts)
-  nnoremap('<leader>ca', vim.lsp.buf.code_action, lsp_opts)
-  nnoremap('gF', vim.lsp.buf.references, lsp_opts)
-
-  if client.server_capabilities.codeLensProvider then
-    local codelens = vim.api.nvim_create_augroup(
-      "LSPCodeLens",
-      { clear = true }
-    )
-    vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave", "CursorHold" }, {
-      group = codelens,
-      callback = vim.lsp.codelens.refresh,
-      buffer = bufnr
-    })
-  end
-end
-
 local on_attach_ts = function(client, bufnr)
-  client.resolved_capabilities.document_formatting = false
-  client.resolved_capabilities.document_range_formatting = false
-
   local ts_utils = require("nvim-lsp-ts-utils")
   ts_utils.setup({})
   ts_utils.setup_client(client)
@@ -61,26 +30,20 @@ local default_flags = { debounce_text_changes = 150 }
 
 local default_capabilities = cmp_nvim_lsp.default_capabilities()
 
-lspconfig['ocamllsp'].setup({
+local default_setup = {
   on_attach = on_attach_generic,
   flags = default_flags,
   handlers = handlers,
   capabilities = default_capabilities,
-})
+}
 
-lspconfig['pyright'].setup({
-  on_attach = on_attach_generic,
-  flags = default_flags,
-  handlers = handlers,
-  capabilities = default_capabilities,
-})
+local default_lsps = { "ocamllsp", "pyright", "solidity",
+  "terraformls", "clangd", "html", "cssls", "jsonls",
+}
 
-lspconfig['solidity'].setup({
-  on_attach = on_attach_generic,
-  flags = default_flags,
-  handlers = handlers,
-  capabilities = default_capabilities,
-})
+for _, lsp in pairs(default_lsps) do
+  lspconfig[lsp].setup(default_setup)
+end
 
 lspconfig['tsserver'].setup({
   on_attach = on_attach_ts,
@@ -89,54 +52,28 @@ lspconfig['tsserver'].setup({
   capabilities = default_capabilities,
 })
 
-neodev.setup({})
-
-lspconfig['yamlls'].setup({
+lspconfig["rust_analyzer"].setup({
   on_attach = on_attach_generic,
   flags = default_flags,
   handlers = handlers,
   capabilities = default_capabilities,
-})
-
-lspconfig_configs['pb'] = {
-  default_config = {
-    cmd = { 'pb', 'lsp' },
-    root_dir = lspconfig.util.root_pattern('.git'),
-    filetypes = { 'proto' }
+  settings = {
+    [ "rust-analyzer" ] = {
+      imports = {
+        granularity = {
+          group = "module"
+        },
+        prefix = "self"
+      },
+      cargo = {
+        buildScripts = {
+          enable = true
+        }
+      },
+      procMacro = {
+        enable = true
+      }
+    }
   }
-}
-
-lspconfig['pb'].setup({
-  on_attach = on_attach_generic,
-  flags = default_flags,
-  handlers = handlers,
-  capabilities = default_capabilities,
 })
 
-lspconfig["terraformls"].setup({
-  on_attach = on_attach_generic,
-  flags = default_flags,
-  handlers = handlers,
-  capabilities = default_capabilities,
-})
-
-lspconfig["clangd"].setup({
-  on_attach = on_attach_generic,
-  flags = default_flags,
-  handlers = handlers,
-  capabilities = default_capabilities,
-})
-
-lspconfig["html"].setup({
-  on_attach = on_attach_generic,
-  flags = default_flags,
-  handlers = handlers,
-  capabilities = default_capabilities,
-})
-
-lspconfig["cssls"].setup({
-  on_attach = on_attach_generic,
-  flags = default_flags,
-  handlers = handlers,
-  capabilities = default_capabilities,
-})

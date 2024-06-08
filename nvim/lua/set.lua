@@ -10,5 +10,4 @@ vim.opt.incsearch = true
 
 -- Colors
 vim.opt.termguicolors = true
-vim.cmd("colorscheme edge")
-vim.opt.background = "light"
+vim.cmd("colorscheme kanagawa-wave")

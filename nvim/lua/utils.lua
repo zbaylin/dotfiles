@@ -24,6 +24,7 @@ end
 
 Export.map = bind("")
 Export.nmap = bind("n", { noremap = false })
+Export.vmap = bind("v", { noremap = false })
 Export.nnoremap = bind("n")
 Export.vnoremap = bind("v")
 Export.xnoremap = bind("x")
