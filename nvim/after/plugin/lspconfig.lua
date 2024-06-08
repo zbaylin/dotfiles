@@ -38,7 +38,7 @@ local default_setup = {
 }
 
 local default_lsps = { "ocamllsp", "pyright", "solidity",
-  "terraformls", "clangd", "html", "cssls", "jsonls",
+  "terraformls", "html", "cssls", "jsonls",
 }
 
 for _, lsp in pairs(default_lsps) do
@@ -77,3 +77,19 @@ lspconfig["rust_analyzer"].setup({
   }
 })
 
+local clangd_query_driver = os.getenv("CLANGD_QUERY_DRIVER")
+local clangd_cmd
+
+if (clangd_query_driver ~= nil) then
+  clangd_cmd = { "clangd", "--query-driver=" .. clangd_query_driver }
+else
+  clangd_cmd = { "clangd" }
+end
+
+lspconfig["clangd"].setup({
+  on_attach = on_attach_generic,
+  flags = default_flags,
+  handlers = handlers,
+  capabilities = default_capabilities,
+  cmd = clangd_cmd,
+})
