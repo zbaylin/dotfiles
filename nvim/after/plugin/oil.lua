@@ -1,8 +1,11 @@
 local oil = require("oil")
 local utils = require("utils")
-local nnoremap = utils.nnoremap
+local wk = require("which-key")
 
 oil.setup()
 
-nnoremap("-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+wk.add({
+  { "-", oil.open, desc = "Open parent directory", mode = "n" }
+})
 
+vim.api.nvim_create_user_command("OilToggleHidden", oil.toggle_hidden, {})

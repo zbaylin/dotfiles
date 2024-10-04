@@ -1,7 +1,8 @@
 local gitsigns = require("gitsigns")
-local nnoremap = require("utils").nnoremap
+local wk = require("which-key")
 
 gitsigns.setup()
 
-
-nnoremap("<leader>gb", gitsigns.toggle_current_line_blame)
+wk.add({
+  { "<leader>gb", gitsigns.toggle_current_line_blame, desc = "Toggle line git blame", mode = "n" }
+})

@@ -2,9 +2,12 @@ local jdtls = require("jdtls")
 local jdtls_setup = require("jdtls.setup")
 local lsp_helpers = require("lsp_helpers")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
+local wk = require("which-key")
 local utils = require("utils")
 
-local on_attach_generic = lsp_helpers.on_attach_generic
+local on_attach_generic = function(client, bufnr) 
+  lsp_helpers.on_attach_generic(wk, client, bufnr)
+end
 
 local home = os.getenv("HOME")
 

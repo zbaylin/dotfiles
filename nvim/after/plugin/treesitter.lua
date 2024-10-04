@@ -33,18 +33,15 @@ treesitter_configs.setup {
   textobjects = {
     select = {
       enable = true,
+      lookahead = true,
       keymaps = {
-        [ "am" ] = "@module.outer",
-        [ "im" ] = "@module.inner",
+        [ "=a" ] = "@assignment.outer",
+        [ "=i" ] = "@assignment.inner",
+        [ "=l" ] = "@assignment.lhs",
+        [ "=r" ] = "@assignment.rhs",
 
-        [ "la" ] = "@assignment.lhs",
-        [ "ra" ] = "@assignment.rhs",
-
-        [ "ai" ] = "@conditional.outer",
-        [ "ii" ] = "@conditional.inner",
-
-        [ "ac" ] = "@comment.outer",
-        [ "ic" ] = "@comment.inner"
+        [ "aa" ] = "@parameter.outer",
+        [ "ai" ] = "@parameter.inner",
       }
     }
   }

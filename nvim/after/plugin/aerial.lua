@@ -1,5 +1,6 @@
 local utils = require("utils")
 local aerial = require("aerial")
+local wk = require("which-key")
 local nnoremap = utils.nnoremap
 
 aerial.setup({
@@ -17,4 +18,6 @@ aerial.setup({
   }
 })
 
-nnoremap("<leader>o", "<cmd>AerialToggle<CR>")
+wk.add({
+  { "<leader>o", "<CMD>AerialToggle<CR>", desc = "Aerial toggle", mode = "n" }
+})

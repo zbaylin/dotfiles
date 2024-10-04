@@ -1,8 +1,7 @@
 local utils = require("utils")
-local nnoremap = utils.nnoremap
 local Export = {}
 
-local on_attach_generic = function(client, bufnr)
+local on_attach_generic = function(wk, client, bufnr)
   local telescope_builtin = require("telescope.builtin")
 
   local lsp_opts = {
@@ -11,28 +10,18 @@ local on_attach_generic = function(client, bufnr)
     buffer = bufnr } -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  -- Mappings.
-  nnoremap('gD', vim.lsp.buf.declaration, lsp_opts)
-  nnoremap('gd', vim.lsp.buf.definition, lsp_opts)
-  nnoremap('K', vim.lsp.buf.hover, lsp_opts)
-  nnoremap('gi', vim.lsp.buf.implementation, lsp_opts)
-  nnoremap('<leader>D', vim.lsp.buf.type_definition, lsp_opts)
-  nnoremap('<leader>rn', vim.lsp.buf.rename, lsp_opts)
-  nnoremap('<leader>ca', vim.lsp.buf.code_action, lsp_opts)
-  nnoremap('<leader>lr', function() telescope_builtin.lsp_references() end, lsp_opts)
-  nnoremap('<leader>td', function() telescope_builtin.lsp_type_definitions() end, lsp_opts)
-
-  if client.server_capabilities.codeLensProvider then
-    local codelens = vim.api.nvim_create_augroup(
-      "LSPCodeLens",
-      { clear = true }
-    )
-    vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave", "CursorHold" }, {
-      group = codelens,
-      callback = vim.lsp.codelens.refresh,
-      buffer = bufnr
-    })
-  end
+  wk.add({
+    { "g", group = "goto" },
+    { "gD", vim.lsp.buf.declaration, desc = "Go to declaration", mode = "n" },
+    { "gd", vim.lsp.buf.definition, desc = "Go to definition", mode = "n" },
+    { "K", vim.lsp.buf.hover, desc = "Open hover", mode = "n" },
+    { "gi", vim.lsp.buf.implementation, desc = "Go to implementation", mode = "n" },
+    { "<leader>rn", vim.lsp.buf.rename, desc = "Rename symbol", mode = "n" },
+    { "<leader>ca", vim.lsp.buf.code_action, desc = "Show code actions", mode = "n" },
+    { "<leader>lr", telescope_builtin.lsp_references, desc = "List references", mode = "n" },
+    { "<leader>td", telescope_builtin.lsp_type_definitions, desc = "List type definitions", mode = "n" },
+    { "<leader>ld", telescope_builtin.diagnostics, desc = "List diagnostics", mode = "n" },
+  })
 end
 
 Export.on_attach_generic = on_attach_generic
