@@ -2,7 +2,15 @@ local lualine = require("lualine")
 
 lualine.setup({
   options = {
-    icons_enabled = false
+    icons_enabled = false,
+    component_separators = {
+      left = "|",
+      right = "|"
+    },
+    section_separators = {
+      left = "",
+      right = ""
+    },
   },
   sections = {
     lualine_b = {
@@ -20,5 +28,11 @@ lualine.setup({
       "aerial",
       sep = " > "
     } }
+  },
+  tabline = {
+    lualine_a = { "buffers" },
+    lualine_b = { "branch" },
+    lualine_c = { "filename" },
+    lualine_z = { "tabs" },
   }
 })

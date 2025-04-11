@@ -7,7 +7,7 @@ illuminate.configure({
     "treesitter"
   },
   filetypes_denylist = {
-    "TelescopePrompt",
+    "snacks_picker_input",
     "oil"
   }
 })

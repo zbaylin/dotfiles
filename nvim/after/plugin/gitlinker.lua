@@ -8,9 +8,19 @@ wk.add({
   { 
     "<leader>gh",
     function()
-      gitlinker.get_buf_range_url("n", { action_callback = gitlinker_actions.open_in_browser })
+      local mode = string.lower(vim.api.nvim_get_mode().mode)
+      gitlinker.get_buf_range_url(mode, { action_callback = gitlinker_actions.open_in_browser })
     end,
     desc = "Open link in GitHub",
-    mode = "n"
-  }
+    mode = { "n", "v" }
+  },
+  { 
+    "<leader>gy",
+    function()
+      local mode = string.lower(vim.api.nvim_get_mode().mode)
+      gitlinker.get_buf_range_url(mode, { action_callback = gitlinker_actions.copy_to_clipboard })
+    end,
+    desc = "Copy GitHub link to clipboard",
+    mode = { "n", "v" }
+  },
 })

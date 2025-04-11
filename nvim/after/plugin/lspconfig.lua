@@ -15,20 +15,12 @@ wk.add({
   { "]d", vim.diagnostic.goto_next, desc = "Goto next diagnostic", mode = "n" },
   { "[d", vim.diagnostic.goto_prev, desc = "Goto previous diagnostic", mode = "n" },
   {
-    "<leader>f",
-    function() vim.lsp.buf.format({ async = true }) end,
-    desc = "Goto previous diagnostic",
-    mode = "n"
-  },
-  {
     "<leader>e",
     function() vim.diagnostic.open_float({ scope = "line" }) end,
     desc = "Show diagnostic float",
     mode = "n"
   }
 })
-
-vmap("<leader>f", function() vim.lsp.buf.format({ async = true }) end)
 
 local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
@@ -53,9 +45,18 @@ local default_setup = {
   capabilities = default_capabilities,
 }
 
-local default_lsps = { "ocamllsp", "pyright", "solidity",
+lspconfig_configs["solidity_ls_nomicfoundation"] = {
+  default_config = {
+    cmd = {'nomicfoundation-solidity-language-server', '--stdio'},
+    filetypes = { 'solidity' },
+    root_dir = lspconfig.util.find_git_ancestor,
+    single_file_support = true,
+  },
+}
+
+local default_lsps = { "ocamllsp", "basedpyright",
   "terraformls", "clangd", "html", "cssls", "jsonls",
-  "gopls"
+  "gopls", "solidity_ls_nomicfoundation"
 }
 
 for _, lsp in pairs(default_lsps) do
@@ -99,6 +100,7 @@ lspconfig["rust_analyzer"].setup({
       },
       check = {
         features = rust_analyzer_features,
+        command = "clippy"
       },
       cargo = {
         features = rust_analyzer_features,
@@ -108,7 +110,10 @@ lspconfig["rust_analyzer"].setup({
       },
       procMacro = {
         enable = true
-      }
+      },
+      diagnostic = {
+        refreshSupport = false
+      },
     }
   }
 })

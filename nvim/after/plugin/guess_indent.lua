@@ -5,6 +5,6 @@ guess_indent.setup({
     "netrw",
     "tutor",
     "oil",
-    "TelescopePrompt"
+    "snacks_picker_input"
   }
 })
