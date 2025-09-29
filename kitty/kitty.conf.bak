@@ -6,7 +6,7 @@
 #: individual font faces and even specify special fonts for particular
 #: characters.
 # BEGIN_KITTY_FONTS
-font_family      family="Victor Mono"
+font_family      family="Ac437 IBM 3270pc"
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
@@ -26,7 +26,7 @@ include NerdFontSymbols.conf
 #:     italic_font      Operator Mono Book Italic
 #:     bold_italic_font Operator Mono Medium Italic
 
-font_size 12
+font_size 16
 
 #: Font size (in pts)
 
@@ -2238,10 +2238,6 @@ include ./kanagawa.conf
 #: Open kitty Website
 
 # map shift+cmd+/ open_url https://sw.kovidgoyal.net/kitty/
-
-map ctrl+alt+j detach_window new-tab
-map ctrl+alt+h detach_window tab-left
-map ctrl+alt+l detach_window tab-right
 
 # vim-kitty-navigator keybinds
 map ctrl+j kitten pass_keys.py bottom ctrl+j

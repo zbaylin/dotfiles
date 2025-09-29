@@ -1,3 +1,6 @@
+# named directories
+hash -d dev="$HOME/Development"
+
 # git aliases
 alias gs="git status"
 alias gd="git diff"

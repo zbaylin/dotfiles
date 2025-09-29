@@ -5,6 +5,15 @@ snacks.setup({
   picker = { enabled = true }
 })
 
+local function copy_git_url()
+  snacks.gitbrowse({
+    open = function(url)
+      vim.fn.setreg("+", url)
+    end,
+    notify=false
+  })
+end
+
 wk.add({
   -- Files
   { "<leader>f", group = "find" },
@@ -22,4 +31,9 @@ wk.add({
   { "<leader>td", snacks.picker.lsp_type_definitions, desc = "List type definitions", mode = "n" },
   { "<leader>ld", snacks.picker.diagnostics, desc = "List diagnostics", mode = "n" },
   { "<leader>ls", snacks.picker.lsp_symbols, desc = "List symbols", mode = "n" },
+
+  -- Git
+  { "<leader>gb", snacks.git.blame_line, desc = "Git blame line", mode = "n" },
+  { "<leader>gy", copy_git_url, desc = "Copy git URL", mode = { "n", "v" } },
+  { "<leader>go", snacks.gitbrowse.open, desc = "Open git URL", mode = { "n", "v" } }
 })

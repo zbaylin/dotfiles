@@ -24,7 +24,6 @@ Plug 'kevinhwang91/promise-async'
 Plug 'knubie/vim-kitty-navigator', { 'do': 'cp ./*.py ~/.config/kitty/' }
 Plug 'lambdalisue/vim-suda' " Edit files with sudo
 Plug 'lervag/vimtex'
-Plug 'lewis6991/gitsigns.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'mfussenegger/nvim-dap-python'
@@ -43,8 +42,8 @@ Plug 'rcarriga/nvim-dap-ui'
 Plug 'rcarriga/nvim-notify'
 Plug 'rebelot/kanagawa.nvim'
 Plug 'rmagatti/goto-preview'
-Plug 'ruifm/gitlinker.nvim'
 Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'sindrets/diffview.nvim'
 Plug 'stevearc/aerial.nvim' " Symbol outline
 Plug 'stevearc/oil.nvim' " File explorer
 Plug 'stevearc/conform.nvim' " Formatter

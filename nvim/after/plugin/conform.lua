@@ -5,8 +5,9 @@ local wk = require("which-key")
 conform.setup({
   formatters_by_ft = {
     python = { "black" },
-    solidity = { "forge_fmt" },
-    rust = { "rustfmt" }
+    solidity = { "prettier" },
+    rust = { "rustfmt" },
+    cpp = { "clang-format" }
   }
 })
 
