@@ -19,12 +19,26 @@ wk.add({
     function() vim.diagnostic.open_float({ scope = "line" }) end,
     desc = "Show diagnostic float",
     mode = "n"
-  }
+  },
+  { "g", group = "goto" },
+  { "gD", vim.lsp.buf.declaration, desc = "Go to declaration", mode = "n" },
+  { "gd", vim.lsp.buf.definition, desc = "Go to definition", mode = "n" },
+  { "K", vim.lsp.buf.hover, desc = "Open hover", mode = "n" },
+  { "gi", vim.lsp.buf.implementation, desc = "Go to implementation", mode = "n" },
+  { "<leader>rn", vim.lsp.buf.rename, desc = "Rename symbol", mode = "n" },
+  { "<leader>th", function()
+    local enabled = vim.lsp.inlay_hint.is_enabled()
+
+    if enabled then
+      vim.notify("Disabling inlay hints")
+    else
+      vim.notify("Enabling inlay hints")
+    end
+
+    vim.lsp.inlay_hint.enable(not disabled)
+  end, desc = "Toggle inlay hints", mode = "n"}
 })
 
-local handlers = {
-  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-}
 
 local on_attach_ts = function(client, bufnr)
   local ts_utils = require("nvim-lsp-ts-utils")
@@ -41,7 +55,6 @@ local default_capabilities = cmp_nvim_lsp.default_capabilities()
 local default_setup = {
   on_attach = on_attach_generic,
   flags = default_flags,
-  handlers = handlers,
   capabilities = default_capabilities,
 }
 
@@ -54,19 +67,9 @@ lspconfig_configs["solidity_ls_nomicfoundation"] = {
   },
 }
 
-local default_lsps = { "ocamllsp", "basedpyright",
-  "terraformls", "clangd", "html", "cssls", "jsonls",
-  "gopls", "solidity_ls_nomicfoundation"
-}
-
-for _, lsp in pairs(default_lsps) do
-  lspconfig[lsp].setup(default_setup)
-end
-
-lspconfig['ts_ls'].setup({
+vim.lsp.config("ts_ls", {
   on_attach = on_attach_ts,
   flags = default_flags,
-  handlers = handlers,
   capabilities = default_capabilities,
 })
 
@@ -85,10 +88,8 @@ if rust_analyzer_features_env ~= nil and rust_analyzer_features_env ~= "" then
   rust_analyzer_features = split(rust_analyzer_features_env, ",")
 end
 
-lspconfig["rust_analyzer"].setup({
-  on_attach = on_attach_generic,
+vim.lsp.config("rust_analyzer", {
   flags = default_flags,
-  handlers = handlers,
   capabilities = default_capabilities,
   settings = {
     [ "rust-analyzer" ] = {
@@ -107,6 +108,9 @@ lspconfig["rust_analyzer"].setup({
         buildScripts = {
           enable = true
         }
+      },
+      inlayHints = {
+        enable = true
       },
       procMacro = {
         enable = true
@@ -127,10 +131,29 @@ else
   clangd_cmd = { "clangd" }
 end
 
-lspconfig["clangd"].setup({
+vim.lsp.config("clangd", {
   on_attach = on_attach_generic,
   flags = default_flags,
-  handlers = handlers,
   capabilities = default_capabilities,
   cmd = clangd_cmd,
 })
+
+vim.diagnostic.config({
+  float = {
+    source = "always"
+  }
+})
+
+vim.lsp.enable({
+  "pyrefly",
+  "rust_analyzer",
+  "ocamllsp",
+  "terraformls",
+  "clangd",
+  "html",
+  "cssls",
+  "jsonls",
+  "gopls",
+  "solidity_ls_nomicfoundation" 
+})
+

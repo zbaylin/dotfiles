@@ -4,10 +4,11 @@ local wk = require("which-key")
 
 conform.setup({
   formatters_by_ft = {
-    python = { "black" },
+    python = { "ruff_format", "black" },
     solidity = { "prettier" },
     rust = { "rustfmt" },
-    cpp = { "clang-format" }
+    cpp = { "clang-format" },
+    html = { "html_beautify" }
   }
 })
 

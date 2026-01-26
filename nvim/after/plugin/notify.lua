@@ -1,3 +1,3 @@
-local notify = require("notify")
-
-vim.notify = notify
+-- local notify = require("notify")
+--
+-- vim.notify = notify

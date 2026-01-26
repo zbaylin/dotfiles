@@ -2,7 +2,9 @@ local snacks = require("snacks")
 local wk = require("which-key")
 
 snacks.setup({
-  picker = { enabled = true }
+  picker = { enabled = true },
+  notifier = { },
+  words = { }
 })
 
 local function copy_git_url()
@@ -24,6 +26,9 @@ wk.add({
   -- Buffers
   { "<leader>b", group = "find" },
   { "<leader>bl", snacks.picker.lines, desc = "Buffer lines", mode = "n" },
+
+  -- Notifications
+  { "<leader>hn", snacks.notifier.hide, desc = "Hide notifications", mode = "n"},
 
   -- LSP
   { "<leader>ca", vim.lsp.buf.code_action, desc = "Show code actions", mode = "n" },

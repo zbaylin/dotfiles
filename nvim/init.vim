@@ -24,7 +24,6 @@ Plug 'kevinhwang91/promise-async'
 Plug 'knubie/vim-kitty-navigator', { 'do': 'cp ./*.py ~/.config/kitty/' }
 Plug 'lambdalisue/vim-suda' " Edit files with sudo
 Plug 'lervag/vimtex'
-Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'mfussenegger/nvim-dap-python'
 Plug 'mfussenegger/nvim-jdtls'
@@ -36,13 +35,12 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-neotest/nvim-nio'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-Plug 'nvim-treesitter/playground'
+Plug 'nvim-treesitter/nvim-treesitter-textobjects', { 'branch': 'main' }
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'rcarriga/nvim-notify'
-Plug 'rebelot/kanagawa.nvim'
 Plug 'rmagatti/goto-preview'
 Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'sainnhe/sonokai'
 Plug 'sindrets/diffview.nvim'
 Plug 'stevearc/aerial.nvim' " Symbol outline
 Plug 'stevearc/oil.nvim' " File explorer
@@ -62,4 +60,5 @@ local remap = require("remap")
 local commands = require("commands")
 local autocmds = require("autocmds")
 local windows = require("windows")
+local rust_analyzer_ext = require("rust_analyzer_ext")
 EOF

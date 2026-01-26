@@ -7,6 +7,3 @@ vim.opt.smartindent = true
 
 -- Incremental search
 vim.opt.incsearch = true
-
--- Colors
-vim.opt.termguicolors = true

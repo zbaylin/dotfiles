@@ -1,9 +1,9 @@
-local treesitter_configs = require("nvim-treesitter.configs")
+local treesitter_configs = require("nvim-treesitter.config")
 local treesitter_install = require("nvim-treesitter.install")
 
 treesitter_install.compilers = { "gcc-mp-12", "clang" }
 
-treesitter_configs.setup {
+treesitter_configs.setup({
   -- A list of parser names, or "all" (the four listed parsers should always be installed)
   ensure_installed = { "c", "lua", "vim", "vimdoc", "ocaml", "json" },
 
@@ -45,7 +45,7 @@ treesitter_configs.setup {
       }
     }
   }
-}
+})
 
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
