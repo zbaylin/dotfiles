@@ -138,6 +138,20 @@ vim.lsp.config("clangd", {
   cmd = clangd_cmd,
 })
 
+vim.lsp.config("texlab", {
+  settings = {
+    texlab = {
+      build = {
+        args = { "-pdf", "-lualatex", "-interaction=nonstopmode", "-synctex=1", "%f" }
+      },
+      forwardSearch = {
+        executable = "okular",
+        args = { "--unique", "file:%p#src:%l%f" }
+      }
+    }
+  }
+})
+
 vim.diagnostic.config({
   float = {
     source = "always"
@@ -154,6 +168,8 @@ vim.lsp.enable({
   "cssls",
   "jsonls",
   "gopls",
-  "solidity_ls_nomicfoundation" 
+  "solidity_ls_nomicfoundation",
+  "ts_ls",
+  "texlab"
 })
 

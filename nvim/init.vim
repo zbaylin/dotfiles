@@ -4,9 +4,11 @@ syntax on
 let mapleader = " "
 
 call plug#begin()
+Plug '3rd/image.nvim'
 Plug 'L3MON4D3/LuaSnip'
+Plug 'GCBallesteros/jupytext.nvim'
 Plug 'RRethy/vim-illuminate'
-Plug 'f-person/auto-dark-mode.nvim'
+Plug 'benlubas/molten-nvim'
 Plug 'folke/flash.nvim' " Navigation helpers
 Plug 'folke/which-key.nvim' " Keybinding view
 Plug 'folke/snacks.nvim'
@@ -18,12 +20,12 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'j-hui/fidget.nvim' " LSP status updates
+Plug 'jmbuhr/otter.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'kevinhwang91/nvim-ufo' " Fold helpers
 Plug 'kevinhwang91/promise-async'
 Plug 'knubie/vim-kitty-navigator', { 'do': 'cp ./*.py ~/.config/kitty/' }
 Plug 'lambdalisue/vim-suda' " Edit files with sudo
-Plug 'lervag/vimtex'
 Plug 'mfussenegger/nvim-dap'
 Plug 'mfussenegger/nvim-dap-python'
 Plug 'mfussenegger/nvim-jdtls'
@@ -34,8 +36,9 @@ Plug 'nvim-lua/plenary.nvim' " Random stdlib stuff
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-neotest/nvim-nio'
 Plug 'nvim-tree/nvim-web-devicons'
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main', 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects', { 'branch': 'main' }
+Plug 'quarto-dev/quarto-nvim'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'rcarriga/nvim-notify'
 Plug 'rmagatti/goto-preview'
