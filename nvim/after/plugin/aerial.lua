@@ -19,5 +19,5 @@ aerial.setup({
 })
 
 wk.add({
-  { "<leader>o", "<CMD>AerialToggle<CR>", desc = "Aerial toggle", mode = "n" }
+  { "<leader>os", "<CMD>AerialToggle<CR>", desc = "Open symbols", mode = "n" }
 })

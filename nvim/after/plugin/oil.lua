@@ -21,7 +21,7 @@ wk.add({
     end
 
     vim.fn.jobstart(cmd, { detach = true })
-  end, }
+  end, desc = "Open in application" }
 })
 
 vim.api.nvim_create_user_command("OilToggleHidden", oil.toggle_hidden, {})

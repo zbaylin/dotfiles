@@ -15,18 +15,17 @@ wk.add({
   { "]d", vim.diagnostic.goto_next, desc = "Goto next diagnostic", mode = "n" },
   { "[d", vim.diagnostic.goto_prev, desc = "Goto previous diagnostic", mode = "n" },
   {
-    "<leader>e",
+    "<leader>oe",
     function() vim.diagnostic.open_float({ scope = "line" }) end,
-    desc = "Show diagnostic float",
+    desc = "Open diagnostic float",
     mode = "n"
   },
-  { "g", group = "goto" },
   { "gD", vim.lsp.buf.declaration, desc = "Go to declaration", mode = "n" },
   { "gd", vim.lsp.buf.definition, desc = "Go to definition", mode = "n" },
   { "K", vim.lsp.buf.hover, desc = "Open hover", mode = "n" },
   { "gi", vim.lsp.buf.implementation, desc = "Go to implementation", mode = "n" },
-  { "<leader>rn", vim.lsp.buf.rename, desc = "Rename symbol", mode = "n" },
-  { "<leader>th", function()
+  { "<leader>crn", vim.lsp.buf.rename, desc = "Rename symbol", mode = "n" },
+  { "<leader>ch", function()
     local enabled = vim.lsp.inlay_hint.is_enabled()
 
     if enabled then

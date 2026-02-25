@@ -1,0 +1,61 @@
+* {
+  font: "TruthFB 14";
+
+  bg0: #FFFFFF;
+  bg1: #DCDCDC;
+  accent: #9999FF;
+  fg0: #000000;
+  fg2: #424242;
+
+  text-color: @fg0;
+  background-color: transparent;
+}
+
+window {
+  background-color: @bg0;
+  location: center;
+  border: 4px;
+  border-radius: 4px;
+  border-color: @bg1;
+  width: 640px;
+}
+
+inputbar {
+  padding: 4px;
+  spacing: 8px;
+  children: [ icon-search, entry ];
+}
+
+element {
+  padding: 4px 8px;
+}
+
+icon-search {
+  expand:     false;
+  filename:   "search";
+}
+
+entry {
+  font: inherit;
+  // placeholder: "Search";
+  placeholder-color: @fg2;
+}
+
+message {
+  border: 2px 0 0;
+  border-color: @accent;
+}
+
+element {
+  // padding: 8px 16px;
+  spacing: 4px;
+  background-color: transparent;
+}
+
+element alternate normal {
+  background-color: @bg1;
+}
+
+element selected normal, element selected active {
+  background-color: @accent;
+}
