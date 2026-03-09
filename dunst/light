@@ -1,0 +1,10 @@
+[global]
+  width = 768
+  origin = top-right
+  offset = (0, 0)
+  font = Inter Variable 8
+  frame_color = "#E5ECF4"
+  background = "#FFFFFF"
+  foreground = "#0D1B1E"
+  corner_radius = 8
+  notification_limit = 3
