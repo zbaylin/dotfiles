@@ -100,7 +100,6 @@ vim.lsp.config("rust_analyzer", {
       },
       check = {
         features = rust_analyzer_features,
-        command = "clippy"
       },
       cargo = {
         features = rust_analyzer_features,

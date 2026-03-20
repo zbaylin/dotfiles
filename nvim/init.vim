@@ -5,11 +5,12 @@ let mapleader = " "
 
 call plug#begin()
 Plug '3rd/image.nvim'
+Plug 'AbaoFromCUG/websocket.nvim'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
 Plug 'GCBallesteros/jupytext.nvim'
 Plug 'RRethy/vim-illuminate'
-Plug 'benlubas/molten-nvim'
+Plug 'SUSTech-data/neopyter'
 Plug 'folke/flash.nvim' " Navigation helpers
 Plug 'folke/which-key.nvim' " Keybinding view
 Plug 'folke/snacks.nvim'
@@ -40,7 +41,6 @@ Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main', 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects', { 'branch': 'main' }
 Plug 'olimorris/codecompanion.nvim'
-Plug 'quarto-dev/quarto-nvim'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'rcarriga/nvim-notify'
 Plug 'rmagatti/goto-preview'

@@ -1,3 +1,3 @@
-local quarto = require("quarto")
+-- local quarto = require("quarto")
 
-quarto.activate()
+-- quarto.activate()
