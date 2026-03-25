@@ -46,3 +46,35 @@ function ssh-bw {
 
   printf "unlock() { echo '%s' | sudo -S echo -n &> /dev/null; }; export -f unlock; \$SHELL -l" "$PW"
 }
+
+function today-note {
+  year="$(date +"%Y")"
+  month="$(date +"%m")"
+  day="$(date +"%d")"
+
+  base_path="$HOME/Notes/$year/$month"
+
+  mkdir -p "$base_path"
+
+  full_path="$base_path/$day.md"
+
+  if [ ! -f "$full_path" ]; then
+    touch "$full_path"
+    echo "Created $full_path"
+  else
+    echo "$full_path already exists"
+  fi
+  nvim "$full_path"
+}
+
+function edit-note {
+  pushd "$HOME/Notes" > "/dev/null"
+
+  note="$(fzf)"
+
+  if [ ! -z "$note" ]; then
+    nvim "$note"
+  fi
+
+  popd > "/dev/null"
+}
