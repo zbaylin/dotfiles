@@ -2,15 +2,13 @@ set number
 syntax on
 
 let mapleader = " "
+let maplocalleader = ","
 
 call plug#begin()
 Plug '3rd/image.nvim'
-Plug 'AbaoFromCUG/websocket.nvim'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
-Plug 'GCBallesteros/jupytext.nvim'
 Plug 'RRethy/vim-illuminate'
-Plug 'SUSTech-data/neopyter'
 Plug 'folke/flash.nvim' " Navigation helpers
 Plug 'folke/which-key.nvim' " Keybinding view
 Plug 'folke/snacks.nvim'
@@ -23,7 +21,6 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'j-hui/fidget.nvim' " LSP status updates
 Plug 'jmbuhr/otter.nvim'
-Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'kevinhwang91/nvim-ufo' " Fold helpers
 Plug 'kevinhwang91/promise-async'
 Plug 'knubie/vim-kitty-navigator', { 'do': 'cp ./*.py ~/.config/kitty/' }
@@ -41,15 +38,14 @@ Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main', 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects', { 'branch': 'main' }
 Plug 'olimorris/codecompanion.nvim'
+Plug 'pwntester/octo.nvim'
 Plug 'rcarriga/nvim-dap-ui'
-Plug 'rcarriga/nvim-notify'
-Plug 'rmagatti/goto-preview'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'sainnhe/sonokai'
-Plug 'sindrets/diffview.nvim'
 Plug 'stevearc/aerial.nvim' " Symbol outline
 Plug 'stevearc/oil.nvim' " File explorer
 Plug 'stevearc/conform.nvim' " Formatter
+Plug 'nosduco/remote-sshfs.nvim' " SSHFS
 Plug 'windwp/nvim-autopairs'
 call plug#end()
 

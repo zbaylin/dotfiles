@@ -6,55 +6,21 @@ codecompanion.setup({
   interactions = {
     chat = {
       adapter = {
-        name = "cursor_cli"
+        name = "claude_code"
       }
     }
   },
   adapters = {
     acp = {
-      cursor_cli = function ()
-        return {
-          name = "cursor_cli",
-          formatted_name = "Cursor CLI",
-          type = "acp",
-          roles = {
-            llm = "assistant",
-            user = "user"
-          },
+      claude_code = function()
+        return codecompanion_adapters.extend("claude_code", {
           commands = {
-            default = { "agent", "acp" }
+            default = { "npx", "@agentclientprotocol/claude-agent-acp" }
           },
-          defaults = {
-            mcpServers = {},
-            timeout = 20000
-          },
-          parameters = {
-            protocolVersion = 1,
-            clientCapabilities = {
-              fs = { readTextFile = true, writeTextFile = true },
-            },
-            clientInfo = {
-              name = "CodeCompanion.nvim",
-              version = "1.0.0",
-            },
-          },
-          handlers = {
-            setup = function(self)
-              vim.notify("Launching Cursor CLI")
-              return true
-            end,
-
-            auth = function(self)
-              return true
-            end,
-
-            form_messages = function(self, messages, capabilities)
-              return codecompanion_helpers.form_messages(self, messages, capabilities)
-            end,
-
-            on_exit = function(self, code) end,
-          },
-        }
+          env = {
+            CLAUDE_CODE_OAUTH_TOKEN = vim.env.CLAUDE_CODE_OAUTH_TOKEN
+          }
+        })
       end
     }
   }

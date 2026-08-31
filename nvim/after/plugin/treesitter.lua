@@ -1,7 +1,5 @@
-local treesitter_configs = require("nvim-treesitter.config")
-local treesitter_install = require("nvim-treesitter.install")
-
-treesitter_install.compilers = { "gcc-mp-12", "clang" }
+local treesitter = require("nvim-treesitter")
+local treesitter_config = require("nvim-treesitter.config")
 
 local fts_group = vim.api.nvim_create_augroup("nvim-treesitter-fts", { clear = true })
 
@@ -15,9 +13,19 @@ vim.api.nvim_create_autocmd("FileType", {
   end
 })
 
-treesitter_configs.setup({
+treesitter.setup({
+  init = function()
+    local ensure_installed = { "c", "lua", "vim", "vimdoc", "ocaml", "json", "markdown", "markdown_inline" }
+    local already_installed = treesitter_config.get_installed()
+    local to_install = vim.iter(ensure_installed)
+      :filter(function(parser)
+        return not vim.tbl_contains(already_installed, parser)
+      end)
+      :totable()
+
+    treesitter.install(to_install)
+  end,
   -- A list of parser names, or "all" (the four listed parsers should always be installed)
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "ocaml", "json", "markdown", "markdown_inline" },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,

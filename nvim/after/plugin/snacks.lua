@@ -20,10 +20,11 @@ wk.add({
   -- Files
   { "<leader>ff", snacks.picker.files, desc = "Find file", mode = "n" },
   { "<leader>fg", snacks.picker.grep, desc = "Grep files", mode = "n" },
+  { "<leader>fG", snacks.picker.grep_buffers, desc = "Grep open buffers", mode = "n" },
   { "<leader>fr", snacks.picker.recent, desc = "Recent", mode = "n" },
 
   -- Buffers
-  { "<leader>bl", snacks.picker.lines, desc = "Buffer lines", mode = "n" },
+  { "<leader>/", snacks.picker.lines, desc = "Buffer lines", mode = "n" },
 
   -- Notifications
   { "<leader>nh", snacks.notifier.hide, desc = "Hide notifications", mode = "n"},
@@ -38,5 +39,8 @@ wk.add({
   -- Git
   { "<leader>gb", snacks.git.blame_line, desc = "Git blame line", mode = "n" },
   { "<leader>gy", copy_git_url, desc = "Copy git URL", mode = { "n", "v" } },
-  { "<leader>go", snacks.gitbrowse.open, desc = "Open git URL", mode = { "n", "v" } }
+  { "<leader>go", snacks.gitbrowse.open, desc = "Open git URL", mode = { "n", "v" } },
+
+  -- Insert
+  { "<leader>ie", snacks.picker.icons, desc = "Insert emoji/icon", mode = { "n" } }
 })
