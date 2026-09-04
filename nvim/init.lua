@@ -27,6 +27,7 @@ vim.pack.add({
   gh("L3MON4D3/LuaSnip"),
   gh("MeanderingProgrammer/render-markdown.nvim"),
   gh("RRethy/vim-illuminate"),
+  gh("chomosuke/typst-preview.nvim"),
   gh("folke/flash.nvim"),      -- Navigation helpers
   gh("folke/which-key.nvim"),  -- Keybinding view
   gh("folke/snacks.nvim"),

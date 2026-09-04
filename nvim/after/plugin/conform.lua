@@ -8,9 +8,11 @@ conform.setup({
     solidity = { "prettier" },
     rust = { "rustfmt" },
     cpp = { "clang-format" },
+    c = { "clang-format" },
     html = { "html_beautify" },
     typescript = { "prettier" },
-    tex = { "tex-fmt" }
+    tex = { "tex-fmt" },
+    typst = { lsp_format = "prefer" },
   }
 })
 

@@ -168,6 +168,7 @@ vim.lsp.enable({
   "gopls",
   "solidity_ls_nomicfoundation",
   "ts_ls",
-  "texlab"
+  "texlab",
+  "tinymist"
 })
 
