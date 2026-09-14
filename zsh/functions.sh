@@ -1,7 +1,3 @@
-function pip-install-save {
-  pip install $1 && pip freeze | grep $1 >> requirements.txt
-}
-
 function hex2dec {
   HEX="$1"
 

@@ -156,6 +156,17 @@ vim.diagnostic.config({
   }
 })
 
+local vim_lsp_start = vim.lsp.start;
+
+vim.lsp.start = function(config, opts)
+  opts = opts or {}
+  local buf = opts.bufnr or vim.api.nvim_get_current_buf()
+  if vim.api.nvim_buf_get_name(buf):match("^octo://") then
+    return
+  end
+  return vim_lsp_start(config, opts)
+end
+
 vim.lsp.enable({
   "pyrefly",
   "rust_analyzer",
