@@ -42,7 +42,6 @@ vim.pack.add({
   gh("jmbuhr/otter.nvim"),
   gh("kevinhwang91/nvim-ufo"), -- Fold helpers
   gh("kevinhwang91/promise-async"),
-  gh("knubie/vim-kitty-navigator"),
   gh("lambdalisue/vim-suda"),  -- Edit files with sudo
   gh("mfussenegger/nvim-dap"),
   gh("mfussenegger/nvim-dap-python"),

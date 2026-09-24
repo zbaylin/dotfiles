@@ -12,8 +12,8 @@ local on_attach_generic = function(client, bufnr)
 end
 
 wk.add({
-  { "]d", vim.diagnostic.goto_next, desc = "Goto next diagnostic", mode = "n" },
-  { "[d", vim.diagnostic.goto_prev, desc = "Goto previous diagnostic", mode = "n" },
+  { "]d", function() vim.diagnostic.jump({count=1, float=true}) end, desc = "Goto next diagnostic", mode = "n" },
+  { "[d", function() vim.diagnostic.jump({count=-1, float=true}) end, desc = "Goto previous diagnostic", mode = "n" },
   {
     "<leader>oe",
     function() vim.diagnostic.open_float({ scope = "line" }) end,
