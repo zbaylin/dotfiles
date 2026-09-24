@@ -1,0 +1,18 @@
+font-family = Victor Mono
+theme = kanagawa-wave
+
+keybind = ctrl+super+h=goto_split:left
+keybind = ctrl+super+j=goto_split:down
+keybind = ctrl+super+k=goto_split:up
+keybind = ctrl+super+l=goto_split:right
+
+keybind = ctrl+alt+h=new_split:left
+keybind = ctrl+alt+j=new_split:down
+keybind = ctrl+alt+k=new_split:up
+keybind = ctrl+alt+l=new_split:right
+
+keybind = ctrl+shift+h=previous_tab
+keybind = ctrl+shift+l=next_tab
+
+unfocused-split-opacity = 0.8
+gtk-tabs-location = bottom
