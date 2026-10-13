@@ -1,0 +1,25 @@
+include $HOME/Development/dotfiles/wm-common/config
+include $HOME/Development/dotfiles/sway/local/*.swayconfig
+
+bindsym $mod+Tab workspace back_and_forth
+bindsym $mod+Shift+Tab workspace next_on_output
+
+bindsym $mod+Alt+Delete exec --no-startup-id gtklock -d
+
+# Scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+exec_always --no-startup-id swaybg -i $HOME/Development/dotfiles/wallpaper
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
+for_window [class="."] inhibit_idle fullscreen
+for_window [app_id="."] inhibit_idle fullscreen
+
+exec swayidle -w \
+	timeout 300 'swaymsg "output * power off"' \
+	resume 'swaymsg "output * power on"' \
+	timeout 600 'gtklock -d' \
+    	before-sleep 'gtklock -d'
+
+bar swaybar_command waybar
