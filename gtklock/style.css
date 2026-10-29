@@ -1,0 +1,13 @@
+* {
+  font-family: "TruthFB"
+}
+
+window {
+  background-image: url("../wallpaper")
+}
+
+#info-box {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 8px
+}
