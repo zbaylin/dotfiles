@@ -1,6 +1,19 @@
 include $HOME/Development/dotfiles/wm-common/config
 include $HOME/Development/dotfiles/sway/local/*.swayconfig
 
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY \
+	DISPLAY \
+	SWAYSOCK \
+	XDG_CURRENT_DESKTOP \
+	XDG_SESSION_TYPE \
+	XDG_SESSION_DESKTOP \
+	DESKTOP_SESSION
+
+input type:keyboard {
+    repeat_delay 250
+    repeat_rate 40
+}
+
 bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+Shift+Tab workspace next_on_output
 
@@ -15,6 +28,10 @@ exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DE
 
 for_window [class="."] inhibit_idle fullscreen
 for_window [app_id="."] inhibit_idle fullscreen
+
+bindsym $mod+Shift+e exec swaynag -t \
+	warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' \
+	-B 'Yes, exit sway' 'swaymsg exit'
 
 exec swayidle -w \
 	timeout 300 'swaymsg "output * power off"' \

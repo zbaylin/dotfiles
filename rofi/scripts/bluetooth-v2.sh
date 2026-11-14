@@ -2,17 +2,19 @@
 
 macs_filter='s/Device \(\(\([0-9]\|[A-Z]\)\{2\}:\?\)\{6\}\) \(.*\)/\1/p'
 name_filter='s/\tName: \(.*\)/\1/p'
+icon_filter='s/\tIcon: \(.*\)/\1/p'
 connected_filter='s/\tConnected: \(.*\)/\1/p'
 charge_filter='s/\tBattery Percentage: \(0x\([0-9]\)*\).*/\1/p'
 result_filter='s/\([A-Z]\|[a-z]\):.*/\1/p'
 
 function get_prompts() {
-  macs="$(bluetoothctl devices | sed -n "$macs_filter")"
+  macs="$(bluetoothctl devices Paired | sed -n "$macs_filter")"
 
   for mac in $macs; do
     info=$(bluetoothctl info "$mac")
     echo "$info" > /tmp/mac-"$mac"
     name="$(sed -n "$name_filter" <<< "$info")"
+    icon="$(sed -n "$icon_filter" <<< "$info")"
     connected=$(sed -n "$connected_filter" <<< "$info")
     charge=$(printf "%d" $(sed -n "$charge_filter" <<< "$info"))
 
@@ -22,8 +24,8 @@ function get_prompts() {
       connection_str="Disconnected"
     fi
 
-    printf "%s :: %s (%s)\0info\x1f%s,%s,%s\x1ficon\x1faudio-headset\n" \
-    "$name" "$connection_str" "$charge%" "$name" "$connection_str" "$mac"
+    printf "%s :: %s (%s)\0info\x1f%s,%s,%s\x1ficon\x1f%s\n" \
+    "$name" "$connection_str" "$charge%" "$name" "$connection_str" "$mac" "$icon"
   done
 }
 

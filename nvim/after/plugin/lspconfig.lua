@@ -57,15 +57,6 @@ local default_setup = {
   capabilities = default_capabilities,
 }
 
-lspconfig_configs["solidity_ls_nomicfoundation"] = {
-  default_config = {
-    cmd = {'nomicfoundation-solidity-language-server', '--stdio'},
-    filetypes = { 'solidity' },
-    root_dir = lspconfig.util.find_git_ancestor,
-    single_file_support = true,
-  },
-}
-
 vim.lsp.config("ts_ls", {
   on_attach = on_attach_ts,
   flags = default_flags,
@@ -177,7 +168,8 @@ vim.lsp.enable({
   "cssls",
   "jsonls",
   "gopls",
-  "solidity_ls_nomicfoundation",
+  -- "solidity_ls_nomicfoundation",
+  "solar",
   "ts_ls",
   "texlab",
   "tinymist"
